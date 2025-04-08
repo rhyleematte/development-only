@@ -28,8 +28,61 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 APPEND_SLASH = True
 CORS_ALLOW_ALL_ORIGINS = True
-# Custom user model
-AUTH_USER_MODEL = 'api.LoginUser'
+(virt) baslot3@85ef0e5b10fd:~/development/app$ python manage.py makemigrations
+Traceback (most recent call last):
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/apps/registry.py", line 158, in get_app_config
+    return self.app_configs[app_label]
+KeyError: 'your_app'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/contrib/auth/__init__.py", line 170, in get_user_model
+    return django_apps.get_model(settings.AUTH_USER_MODEL, require_ready=False)
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/apps/registry.py", line 208, in get_model
+    app_config = self.get_app_config(app_label)
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/apps/registry.py", line 165, in get_app_config
+    raise LookupError(message)
+LookupError: No installed app with label 'your_app'.
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "manage.py", line 22, in <module>
+    main()
+  File "manage.py", line 18, in main
+    execute_from_command_line(sys.argv)
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/core/management/__init__.py", line 442, in execute_from_command_line
+    utility.execute()
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/core/management/__init__.py", line 416, in execute
+    django.setup()
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/__init__.py", line 24, in setup
+    apps.populate(settings.INSTALLED_APPS)
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/apps/registry.py", line 124, in populate
+    app_config.ready()
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/contrib/admin/apps.py", line 27, in ready
+    self.module.autodiscover()
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/contrib/admin/__init__.py", line 50, in autodiscover
+    autodiscover_modules("admin", register_to=site)
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/utils/module_loading.py", line 58, in autodiscover_modules
+    import_module("%s.%s" % (app_config.name, module_to_search))
+  File "/usr/lib/python3.8/importlib/__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1014, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 991, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 975, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 671, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 848, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/contrib/auth/admin.py", line 6, in <module>
+    from django.contrib.auth.forms import (
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/contrib/auth/forms.py", line 19, in <module>
+    UserModel = get_user_model()
+  File "/home/baslot3/.local/lib/python3.8/site-packages/django/contrib/auth/__init__.py", line 176, in get_user_model
+    raise ImproperlyConfigured(
+django.core.exceptions.ImproperlyConfigured: AUTH_USER_MODEL refers to model 'your_app.LoginUser' that has not been installed
+(virt) baslot3@85ef0e5b10fd:~/development/app$
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -143,4 +196,3 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'api.LoginUser'

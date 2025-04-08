@@ -28,8 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = ['*']
 APPEND_SLASH = True
 CORS_ALLOW_ALL_ORIGINS = True
-# Custom user model
-AUTH_USER_MODEL = 'api.LoginUser'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'api',
     'corsheaders',
+
 ]
 
 MIDDLEWARE = [
@@ -143,4 +144,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-AUTH_USER_MODEL = 'api.LoginUser'
+AUTH_USER_MODEL = 'your_app.LoginUser'  # Replace 'your_app' with the actual app name

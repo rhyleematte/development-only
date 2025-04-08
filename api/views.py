@@ -1,18 +1,15 @@
+
+# Ecommerce
+from django.shortcuts import render
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from .models.product import Product
+from .models.cart import Cart
+from .serializers import ProductSerializer, CartSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from .models import Contact  # Ensure you're importing models here
-
-# Ecommerce
 from rest_framework import viewsets
-from rest_framework.decorators import api_view
-from django.http import JsonResponse
-from .models import Product, Cart, CartItem
-from .serializers import ProductSerializer, CartSerializer
-
-# End Ecommerce
-
-
 
 class HelloWorld(APIView):
     def get(self, request):
@@ -75,75 +72,23 @@ class ContactListView(APIView):
         else:
             return Response({"error": "Invalid data format"}, status=status.HTTP_400_BAD_REQUEST)
 
-
-
 # Ecommerce
+# api/views.py
 
-from rest_framework import viewsets
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from django.http import JsonResponse
-from .models import Product, Cart, CartItem
-from .serializers import ProductSerializer, CartSerializer
+@api_view(['GET'])
+def product_list(request):
+    products = Product.objects.all()
+    serializer = ProductSerializer(products, many=True)
+    return Response(serializer.data)
 
+@api_view(['GET'])
+def cart_list(request):
+    carts = Cart.objects.all()
+    serializer = CartSerializer(carts, many=True)
+    return Response(serializer.data)
 
-# Product ViewSet for listing and retrieving product information
-class ProductViewSet(viewsets.ModelViewSet):
-    queryset = Product.objects.all()
-    serializer_class = ProductSerializer
+# api/views.py
 
-
-# Cart ViewSet for cart operations
-class CartViewSet(viewsets.ViewSet):
-    def list(self, request, user_id=None):
-        try:
-            cart = Cart.objects.get(user_id=user_id)
-            serializer = CartSerializer(cart)
-            return Response(serializer.data)
-        except Cart.DoesNotExist:
-            return JsonResponse({'error': 'Cart not found for the user'}, status=404)
-
-    @api_view(['POST'])
-    def add_to_cart(self, request):
-        cart_id = request.data.get('cart_id')
-        product_id = request.data.get('product_id')
-        quantity = request.data.get('quantity')
-
-        try:
-            cart = Cart.objects.get(id=cart_id)
-            product = Product.objects.get(id=product_id)
-
-            # Check if the product is already in the cart
-            cart_item, created = CartItem.objects.get_or_create(cart=cart, product=product)
-            if not created:
-                cart_item.quantity += quantity  # Update the quantity if the item exists
-            cart_item.save()
-
-            return JsonResponse({'message': 'Product added to cart'}, status=200)
-        except (Cart.DoesNotExist, Product.DoesNotExist):
-            return JsonResponse({'error': 'Invalid cart or product ID'}, status=400)
-
-    @api_view(['POST'])
-    def checkout(self, request):
-        cart_id = request.data.get('cart_id')
-
-        try:
-            cart = Cart.objects.get(id=cart_id)
-            total_amount = 0
-            for item in cart.items.all():
-                total_amount += item.product.price * item.quantity
-
-            # After successful checkout, you can empty the cart or create an order entry
-            # Here, we just clear the cart
-            cart.items.all().delete()
-
-            return JsonResponse({'message': 'Checkout successful', 'total_amount': total_amount}, status=200)
-        except Cart.DoesNotExist:
-            return JsonResponse({'error': 'Cart not found'}, status=404)
-
-class ProductList(APIView):
-    def get(self, request):
-        products = Product.objects.all()
-        serializer = ProductSerializer(products, many=True)
-        return Response(serializer.data)
-# End Ecommerce
+class CartViewSet(viewsets.ModelViewSet):
+    queryset = Cart.objects.all()
+    serializer_class = CartSerializer
