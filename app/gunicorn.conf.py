@@ -1,4 +1,4 @@
-bind = '0.0.0.0:8100'
+bind = '0.0.0.0:8002'
 threads = 2
 
 timeout = 120  # Increase timeout to 120 seconds

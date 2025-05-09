@@ -52,7 +52,7 @@ CORS_URLS_REGEX = r'^/api/.*$'
 
 # Add media types to CORS
 CORS_ALLOWED_ORIGINS = [
-    "http://172.17.100.14:3383",
+    "http://172.17.100.14:3368",
 ]
 
 # Application definition
@@ -135,9 +135,9 @@ WSGI_APPLICATION = 'app.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',  # Use MySQL engine
-        'NAME': 'default_db1',                 # Your database name
-        'USER': 'default',                     # Your MySQL username
-        'PASSWORD': '1234',                  # Your MySQL password
+        'NAME': 'baslot3_db1',                 # Your database name
+        'USER': 'baslot3',                     # Your MySQL username
+        'PASSWORD': '123456',                  # Your MySQL password
         'HOST': 'localhost',                   # MySQL server host (localhost if on the same machine)
         'PORT': '3321',                        # MySQL default port
     }
@@ -183,8 +183,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_ROOT = '/home/default/development/app/media/'
-FORCE_SCRIPT_NAME = '/default'
+MEDIA_ROOT = '/home/baslot3/development/app/media/'
+FORCE_SCRIPT_NAME = '/baslot3'
 USE_X_FORWARDED_HOST = True
 USE_X_FORWARDED_PORT = True
 # Default primary key field type
